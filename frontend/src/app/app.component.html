@@ -1,3 +1,11 @@
 <app-nav></app-nav>
 
-<app-list-users></app-list-users>
+@if(!accountService.user())
+{
+    <app-login></app-login>
+}
+@else
+{
+    <app-list-users></app-list-users>
+}
+

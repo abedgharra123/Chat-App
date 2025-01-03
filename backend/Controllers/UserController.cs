@@ -62,17 +62,18 @@ namespace backend.Controllers
                 Token = tokenService.CreateToken(user)
             });
         }
-
-        [HttpGet("login")]
+        [AllowAnonymous]
+        [HttpPost("login")]
         public ActionResult<UserDTO> Login(LoginDTO loginDTO)
         {
-            var user = dataBase.Users.FirstOrDefault(user => user.Username == loginDTO.Username);
+            var user = dataBase.Users.FirstOrDefault(user => user.Username == loginDTO.username);
             if(user == null)
             {
-                return Content($"User {loginDTO.Username} not found");
+                return Content($"User {loginDTO.username} not found");
             }
+            Console.WriteLine(user);
             using var hmac = new HMACSHA512(user.PasswordKey);
-            var computedHash = hmac.ComputeHash(Encoding.UTF8.GetBytes(loginDTO.Password));
+            var computedHash = hmac.ComputeHash(Encoding.UTF8.GetBytes(loginDTO.password));
             for(int i = 0; i < computedHash.Length; i++)
             {
                 if(computedHash[i] != user.Password[i])
@@ -81,7 +82,7 @@ namespace backend.Controllers
                 }
             }
             return Ok(new UserDTO(){
-                Username = loginDTO.Username,
+                Username = loginDTO.username,
                 Token = tokenService.CreateToken(user)
             });
         }
