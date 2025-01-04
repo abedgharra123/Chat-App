@@ -1,6 +1,9 @@
 import { HttpClient } from '@angular/common/http';
 import { User } from '../_models/user'; // Adjust the path as necessary
 import { inject, Injectable, OnInit, signal } from '@angular/core';
+import { catchError } from 'rxjs/operators';
+import { throwError } from 'rxjs';
+import Swal from 'sweetalert2'; // SweetAlert for beautiful alerts
 
 @Injectable({
   providedIn: 'root'
@@ -23,6 +26,7 @@ export class AccountService implements OnInit{
   login(model: any) {
     return this.http.post<User>(`${this.serverUrl}/api/user/login`, model)
       .subscribe(user => {
+
         localStorage.setItem('user', JSON.stringify(user));
         this.user.set(user);
       }
@@ -34,13 +38,33 @@ export class AccountService implements OnInit{
     this.user.set(null);
   }
 
-  register(username: string, password: string) {
-    return this.http.post<User>(`${this.serverUrl}/api/user/register`, { username, password })
-      .subscribe(user => {
-        localStorage.setItem('user', JSON.stringify(user));
-        this.user.set(user);
-      }
-    );
+  register(model: any) {
+    return this.http.post<User>(`${this.serverUrl}/api/user/register`, model)
+      .pipe(
+        catchError((error) => {
+          // Show a styled alert to the user
+          Swal.fire({
+            icon: 'error',
+            title: 'Registration Failed',
+            text: error?.error?.message || 'Something went wrong. Please try again.',
+            confirmButtonColor: '#d33'
+          });
+          return throwError(error); // Re-throw the error if needed
+        })
+      )
+      .subscribe(
+        (user) => {
+          // Success logic
+          localStorage.setItem('user', JSON.stringify(user));
+          this.user.set(user);
+          Swal.fire({
+            icon: 'success',
+            title: 'Registration Successful',
+            text: 'Welcome to the platform!',
+            confirmButtonColor: '#28a745'
+          });
+        }
+      );
   }
 
   getUsers() {

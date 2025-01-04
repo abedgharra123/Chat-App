@@ -7,26 +7,30 @@
   
               <div class="mb-md-4 mt-md-4 pb-5">
   
-                <h2 class="fw-bold mb-5 text-uppercase">Login</h2>
+                <h2 class="fw-bold mb-5 text-uppercase">Register</h2>
   
                 <div data-mdb-input-init class="form-outline form-white mb-4">
                   <input placeholder="Username" type="email" id="typeEmailX" class="form-control form-control-lg" [(ngModel)]="username"/>
                 </div>
+
   
                 <div data-mdb-input-init class="form-outline form-white mb-4">
                   <input [(ngModel)]="password" type="password" placeholder="Password" id="typePasswordX" class="form-control form-control-lg" />
                 </div>
+
+                <div data-mdb-input-init class="form-outline form-white mb-4">
+                    <input [(ngModel)]="password2" type="password" placeholder="Reinter Password" id="typePasswordX2" class="form-control form-control-lg" />
+                </div>
   
-                <p class="small mb-3 pb-lg-2"><a class="text-white-50" href="#!">Forgot password?</a></p>
   
-                <button data-mdb-button-init data-mdb-ripple-init class="btn btn-outline-light btn-lg px-5" (click)="login()" type="submit">Login</button>
+                <button data-mdb-button-init data-mdb-ripple-init class="btn btn-outline-light btn-lg px-5" (click)="register()" type="submit">Register</button>
   
      
   
               </div>
   
               <div>
-                <p class="mb-0">Don't have an account? <a href="#!" class="text-white-50 fw-bold">Sign Up</a>
+                <p class="mb-0">Do you already have an account? <a href="#!" class="text-white-50 fw-bold">Login</a>
                 </p>
               </div>
   
