@@ -1,6 +1,7 @@
 import { Component, inject } from '@angular/core';
 import { AccountService } from '../_services/account.service';
 import { FormsModule } from '@angular/forms';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-register',
@@ -17,7 +18,12 @@ export class RegisterComponent {
   password2: string = '';
   register() {
     if (this.password !== this.password2) {
-      alert("Passwords do not match");
+      Swal.fire({
+        icon: 'error',
+        title: 'Passwords do not match',
+        text: 'Please make sure the passwords match.',
+        confirmButtonColor: '#d33'
+      });
       return;
     }
     this.accountService.register({ username: this.username, password: this.password });

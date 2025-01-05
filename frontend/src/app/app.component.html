@@ -1,11 +1,7 @@
 <app-nav></app-nav>
 
-@if(!accountService.user())
-{
-    <app-register></app-register>
-}
-@else
-{
-    <app-list-users></app-list-users>
-}
+
+<router-outlet></router-outlet>
+
+
 

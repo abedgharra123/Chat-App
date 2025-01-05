@@ -13,18 +13,28 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarNav">
           <ul class="navbar-nav ms-auto">
-            <li class="nav-item">
-              <a class="nav-link active" aria-current="page" href="#">Home</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="#">Features</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="#">Pricing</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
-            </li>
+            @if (!accountService.user())
+            {
+              <li class="nav-item">
+                <a class="nav-link active" aria-current="page" href="#">Home</a>
+              </li>
+              <li class="nav-item">
+                <a routerLink="/register" routerLinkActive="router-link-active"  class="nav-link" href="#">Register</a>
+              </li>
+              <li class="nav-item">
+                <a  routerLink="/login"  class="nav-link" href="#">Login</a>
+              </li>
+            }@else{
+              <li class="nav-item">
+                <a routerLink=""  class="nav-link active" aria-current="page" href="#">Home</a>
+              </li>
+              <li class="nav-item">
+                <a routerLink="/members"  class="nav-link" href="#">Members</a>
+              </li>
+              <li class="nav-item">
+                <a (click)="logout()"  class="nav-link " href="#">Logout</a>
+              </li>
+            }
           </ul>
         </div>
       </div>
