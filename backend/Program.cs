@@ -1,4 +1,5 @@
 using backend.extentions;
+using backend.MiddleWares;
 
 
 var builder = WebApplication.CreateBuilder(args);
@@ -10,8 +11,10 @@ builder.Services.AddControllers();
 builder.Services.AddOpenApi();
 builder.Services.AddServices(builder.Configuration);
 
+
 var app = builder.Build();
 
+app.UseMiddleware<ExceptionMiddleware>();
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
